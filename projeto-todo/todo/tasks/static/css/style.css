@@ -15,11 +15,13 @@ container-fluid {
 }
 .navbar-brand {
     font-weight: bold;
+    margin-left: 15px;
 }
 .navbar-light .navbar-nav a.nav-link {
     color: #333;
     letter-spacing: 1px;
 }
+
 /* Botão de Selecionar */
 #add-link {
     text-decoration: none;
@@ -41,21 +43,23 @@ container-fluid {
 
 /* Busca */
 .fas.fa-search {
-    position: absolute;
+    position: relative;
     top: 12px;
     right: 26px;
+    cursor: pointer;
 }
 
 .search-div {
     padding: 0px;
     margin-top: 15px;
     margin-bottom: 15px;
-    display: inline-block !important;
+    display: inline-block;
 }
 
 /* Lista de tarefas */
 .list-div {
     padding: 0;
+    margin-bottom: 40px;
 }
 .task-list {
     padding-left: 0;
@@ -80,7 +84,6 @@ container-fluid {
     color: green !important;
 }
 
-
 /*Rodapé*/
 footer {
     background-color: #333;
@@ -88,10 +91,10 @@ footer {
     border-top: 2px solid #202020;
 }
 footer p {
+    position: relative;
     color: #f5f5f5;
     text-align: center;
     top: 50%;
-    position: relative;
 }
 
 /* messages */
@@ -100,4 +103,30 @@ ul.messages {
 }
 ul.messages li {
     list-style: none;
+}
+
+/* Paginação */
+.pagination {
+    margin-bottom: 20px;
+}
+
+.step-links {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.step-links .current {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* login */
+.auth-card {
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
 }
