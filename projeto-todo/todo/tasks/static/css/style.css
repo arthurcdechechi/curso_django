@@ -41,6 +41,17 @@ container-fluid {
     margin-right: 5px;
 }
 
+/* Filtro */
+.filter-div {
+    margin-bottom: 15px;
+    padding: 0;
+}
+#filter {
+    display: inline-block;
+    width: 25%;
+    margin-left: 10px;
+}
+
 /* Busca */
 .fas.fa-search {
     position: relative;
@@ -71,7 +82,19 @@ container-fluid {
     padding-top: 10px;
     border-bottom: 1px dashed #ccc;
 }
-.fas.fa-trash, .fas.fa-edit {
+.task-item-done {
+    list-style: none;
+    font-size: 20px;
+    height: 50px;
+    padding-top: 10px;
+    border-bottom: 1px dashed #ccc;
+    background-color: #ccc;
+    border: #ccc;
+}
+.task-title {
+    margin-left: 5px;
+}
+.fas.fa-trash, .fas.fa-edit, .fa.fa-check-square-o {
     cursor: pointer;
     margin: 5px;
     font-size: 20px;
@@ -82,6 +105,12 @@ container-fluid {
 }
 .fas.fa-edit {
     color: green !important;
+}
+.task-item .fa.fa-check-square-o {
+    color: #ccc !important;
+}
+.task-item-done .fa.fa-check-square-o {
+    color: #3476e2 !important;
 }
 
 /*Rodapé*/
@@ -129,4 +158,9 @@ ul.messages li {
 .btn {
     display: block;
     width: 100%;
+}
+
+.change-form-p {
+    margin-top: 30px;
+    text-align: center;
 }

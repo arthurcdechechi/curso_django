@@ -10,11 +10,25 @@ from .models import Task
 def tasklist(request):
 
     search = request.GET.get('search')
+    filter = request.GET.get('filter')
 
+    # if search and filter:
+    #     tasks_list = Task.objects.filter(user=request.user, title__icontains=search, done=filter).order_by("-created_at")
+    # elif search:
+    #     tasks_list = Task.objects.filter(user=request.user, title__icontains=search).order_by("-created_at")
+    # elif filter:
+    #     tasks_list = Task.objects.filter(user=request.user, done=filter).order_by("-created_at")
+    # else:
+    #     tasks_list = Task.objects.filter(user=request.user).order_by("-created_at")
+    # paginator = Paginator(tasks_list, 3)
+    # page = request.GET.get("page")
+    # tasks = paginator.get_page(page)
     if search:
-        tasks = Task.objects.filter(title__icontains=search).order_by("-created_at")
+        tasks = Task.objects.filter(user=request.user, title__icontains=search).order_by("-created_at")
+    elif filter:
+        tasks = Task.objects.filter(user=request.user, done=filter).order_by("-created_at")
     else:
-        tasks_list = Task.objects.all().order_by("-created_at")
+        tasks_list = Task.objects.filter(user=request.user).order_by("-created_at")
 
         paginator = Paginator(tasks_list, 3)
 
@@ -26,7 +40,7 @@ def tasklist(request):
 
 @login_required
 def taskView(request, id):
-    task = get_object_or_404(Task, pk=id)
+    task = get_object_or_404(Task, pk=id, user = request.user)
     return render(request, 'tasks/task.html', {"task": task})
 
 @login_required
@@ -36,6 +50,7 @@ def newTask(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.done = "doing"
+            task.user = request.user
             task.save()
             return redirect("/")
     else:
@@ -44,7 +59,7 @@ def newTask(request):
 
 @login_required
 def editTask(request, id):
-    task = get_object_or_404(Task, pk=id)
+    task = get_object_or_404(Task, pk=id, user=request.user)
     form = TaskForm(instance=task)
 
     if(request.method == "POST"):
@@ -60,10 +75,24 @@ def editTask(request, id):
 
 @login_required
 def deleteTask(request, id):
-    task = get_object_or_404(Task, pk=id)
+    task = get_object_or_404(Task, pk=id, user=request.user)
     task.delete()
     messages.info(request, "Tarefa Deletada.")
     return(redirect("/"))
+
+@login_required
+def checkTask(request, id):
+    task = get_object_or_404(Task, pk=id, user=request.user)
+    
+    if(task.done == "doing"):
+        task.done = "done"
+    else:
+        task.done = "doing"
+
+    task.save()
+
+    return redirect("/")
+
 
 def helloworld(request):
     return HttpResponse("Hello, world!")
