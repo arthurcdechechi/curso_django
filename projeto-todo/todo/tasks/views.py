@@ -5,12 +5,16 @@ from django.http import HttpResponse
 from .forms import TaskForm
 from django.contrib import messages
 from .models import Task
+import datetime
 
 @login_required
 def tasklist(request):
 
     search = request.GET.get('search')
     filter = request.GET.get('filter')
+    tasksDoneRecently = Task.objects.filter(user=request.user, done="done", updated_at__gt=datetime.datetime.now()-datetime.timedelta(days=7)).count()
+    tasksDone = Task.objects.filter(user=request.user, done="done").count()
+    tasksNotDone = Task.objects.filter(user=request.user, done="doing").count()
 
     # if search and filter:
     #     tasks_list = Task.objects.filter(user=request.user, title__icontains=search, done=filter).order_by("-created_at")
@@ -18,7 +22,7 @@ def tasklist(request):
     #     tasks_list = Task.objects.filter(user=request.user, title__icontains=search).order_by("-created_at")
     # elif filter:
     #     tasks_list = Task.objects.filter(user=request.user, done=filter).order_by("-created_at")
-    # else:
+    # else: 
     #     tasks_list = Task.objects.filter(user=request.user).order_by("-created_at")
     # paginator = Paginator(tasks_list, 3)
     # page = request.GET.get("page")
@@ -36,7 +40,11 @@ def tasklist(request):
 
         tasks = paginator.get_page(page)
 
-    return render(request, 'tasks/list.html', {"tasks": tasks})
+    return render(
+        request,
+        'tasks/list.html',
+        {"tasks": tasks, "tasksDoneRecently": tasksDoneRecently, "tasksDone": tasksDone, "tasksNotDone": tasksNotDone}
+    )
 
 @login_required
 def taskView(request, id):

@@ -5,6 +5,23 @@
 {% block content %}
 <div class="offset-1 col-10 list-div">
     <h1>To Do List</h1>
+    <div class="container dashboard">
+        <div class="row">
+            <div class="col-4 dashboard-box" id="dashboard-lastdays">
+                <h4>Finalizadas nos últimos 7 dias</h4>
+                <span>{{ tasksDoneRecently }}</span>
+            </div>
+            <div class="col-4 dashboard-box" id="dashboard-done">
+                <h4>Tarefas Finalizadas</h4>
+                <span>{{ tasksDone }}</span>
+            </div>
+            <div class="col-4 dashboard-box" id="dashboard-doing">
+                <h4>Tarefas em andamento</h4>
+                <span>{{ tasksNotDone }}</span>
+            </div>
+        </div>
+    </div>
+
     <a id="add-link" href="newtask/">
         <div class="col-2 add-div">
             <i class="fas fa-plus"></i> Adicionar Tarefa
